@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import Heading from "@/shared/components/typography/Heading";
-import LoginForm from "@/features/components/LoginForm";
+import LoginForm from "@/features/auth/components/LoginForm";
 import { generatePageTitle } from "@/shared/utils/metadata";
 
 export const metadata: Metadata = {
