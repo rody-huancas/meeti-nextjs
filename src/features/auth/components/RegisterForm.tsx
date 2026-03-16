@@ -7,16 +7,17 @@ import FormError from "@/shared/components/forms/FormError";
 import FormInput from "@/shared/components/forms/FormInput";
 import FormLabel from "@/shared/components/forms/FormLabel";
 import FormSubmit from "@/shared/components/forms/FormSubmit";
+import { signUpAction } from "@/features/auth/actions/auth.actions";
 import { SignUpInput, SignUpSchema } from "@/features/auth/schemas/auth.schema";
 
 const RegisterForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(SignUpSchema),
-    mode: "onSubmit"
+    mode: "all"
   });
 
-  const onSubmit = (data: SignUpInput) => {
-    console.log(data)
+  const onSubmit = async (data: SignUpInput) => {
+    await signUpAction(data);
   }
 
   return (
