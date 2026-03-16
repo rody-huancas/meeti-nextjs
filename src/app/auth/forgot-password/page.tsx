@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Heading from "@/shared/components/typography/Heading";
-import ForgotPasswordForm from "@/features/components/ForgotPasswordForm";
+import ForgotPasswordForm from "@/features/auth/components/ForgotPasswordForm";
 import { generatePageTitle } from "@/shared/utils/metadata";
 import Link from "next/link";
 

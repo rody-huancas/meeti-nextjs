@@ -7,7 +7,7 @@ import FormError from "@/shared/components/forms/FormError";
 import FormInput from "@/shared/components/forms/FormInput";
 import FormLabel from "@/shared/components/forms/FormLabel";
 import FormSubmit from "@/shared/components/forms/FormSubmit";
-import { SignUpInput, SignUpSchema } from "@/features/schemas/auth.schema";
+import { SignUpInput, SignUpSchema } from "@/features/auth/schemas/auth.schema";
 
 const RegisterForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({
