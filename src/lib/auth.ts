@@ -5,8 +5,11 @@ import { db } from "@/database";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
-    provider: "pg",
+    provider : "pg",
     usePlural: true,
   }),
+  emailAndPassword: {
+    enabled: true,
+  },
   plugins: [nextCookies()],
 });

@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
 import Form from "@/shared/components/forms/Form";
 import FormError from "@/shared/components/forms/FormError";
 import FormInput from "@/shared/components/forms/FormInput";
@@ -11,14 +12,23 @@ import { signUpAction } from "@/features/auth/actions/auth.actions";
 import { SignUpInput, SignUpSchema } from "@/features/auth/schemas/auth.schema";
 
 const RegisterForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm({
     resolver: zodResolver(SignUpSchema),
-    mode: "all"
+    mode: "all",
   });
 
   const onSubmit = async (data: SignUpInput) => {
-    await signUpAction(data);
-  }
+    const { error, success } = await signUpAction(data);
+
+    if (error) {
+      toast.error(error);
+    }
+
+    if (success) {
+      toast.success(success);
+      reset();
+    }
+  };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -28,7 +38,7 @@ const RegisterForm = () => {
         placeholder="Ingresa tu Nombre"
         {...register("name")}
       />
-      { errors.name && <FormError>{errors.name.message}</FormError> }
+      {errors.name && <FormError>{errors.name.message}</FormError>}
 
       <FormLabel htmlFor="email">E-mail</FormLabel>
       <FormInput
@@ -37,7 +47,7 @@ const RegisterForm = () => {
         placeholder="Ingresa tu E-mail"
         {...register("email")}
       />
-      { errors.email && <FormError>{errors.email.message}</FormError> }
+      {errors.email && <FormError>{errors.email.message}</FormError>}
 
       <FormLabel htmlFor="password">Contraseña</FormLabel>
       <FormInput
@@ -46,7 +56,7 @@ const RegisterForm = () => {
         placeholder="Contraseña - Min. 8 Caracteres"
         {...register("password")}
       />
-      { errors.password && <FormError>{errors.password.message}</FormError> }
+      {errors.password && <FormError>{errors.password.message}</FormError>}
 
       <FormLabel htmlFor="passwordConfirmation">Repetir Contraseña</FormLabel>
       <FormInput
@@ -55,9 +65,11 @@ const RegisterForm = () => {
         placeholder="Repite tu contraseña"
         {...register("passwordConfirmation")}
       />
-      { errors.passwordConfirmation && <FormError>{errors.passwordConfirmation.message}</FormError> }
+      {errors.passwordConfirmation && (
+        <FormError>{errors.passwordConfirmation.message}</FormError>
+      )}
 
-      <FormSubmit value="Registrarme" />
+      <FormSubmit value="Registrarme" disabled={isSubmitting} />
     </Form>
   );
 };
