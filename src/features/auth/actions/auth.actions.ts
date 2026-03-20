@@ -1,7 +1,7 @@
 "use server";
 
-import { SignUpInput, SignUpSchema } from "../schemas/auth.schema";
 import { authService } from "../services/AuthService";
+import { SignUpInput, SignUpSchema } from "../schemas/auth.schema";
 
 export const signUpAction = async (input: SignUpInput) => {
   const data = SignUpSchema.safeParse(input);
@@ -13,5 +13,7 @@ export const signUpAction = async (input: SignUpInput) => {
     };
   }
 
-  await authService.register(data.data);
+  const response = await authService.register(data.data);
+
+  return response;
 };
