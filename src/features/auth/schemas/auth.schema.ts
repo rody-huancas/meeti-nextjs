@@ -11,14 +11,23 @@ export const BaseAuthSchema = z.object({
     .min(1, { error: "La contraseña de confirmación no puede ir vacío" }),
 });
 
-export const SignUpSchema = BaseAuthSchema.pick({
-  name: true,
+export const SignInSchema = BaseAuthSchema.pick({
   email: true,
-  password: true,
+}).extend({
+  password: z
+    .string()
+    .min(1, { error: "La contraseña no debe ir vacío." }),
+})
+
+export const SignUpSchema = BaseAuthSchema.pick({
+  name                : true,
+  email               : true,
+  password            : true,
   passwordConfirmation: true,
 }).refine((data) => data.password === data.passwordConfirmation, {
   error: "Las contraseñas no son iguales",
-  path: ["passwordConfirmation"],
+  path : ["passwordConfirmation"],
 });
 
+export type SignInInput = z.infer<typeof SignInSchema>;
 export type SignUpInput = z.infer<typeof SignUpSchema>;
