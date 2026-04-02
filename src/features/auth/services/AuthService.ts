@@ -64,6 +64,7 @@ class AuthService {
       if (error instanceof APIError) {
         const messages: Record<number, string> = {
           401: "Contraseña incorrecta.",
+          403: "Tu cuenta no ha sido verificada. Revisa tu E-mail para confirmar tu cuenta.",
         };
 
         const errorMessage = messages[error.statusCode] || "Hubo un error al iniciar sesión.";
